@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
@@ -60,6 +61,7 @@ public class PlayerMovment : MonoBehaviour
     private float jumpTimeoutDelta;
     private bool jumpInput = false;
     private bool sprintInput = false;
+    Quaternion targetRotation;
 
 
 
@@ -139,9 +141,25 @@ public class PlayerMovment : MonoBehaviour
         // if there is no input, set speed to 0
         if (!gettingHorizontalInput)
             speed = 0.0f;
+
+        // handle rotation 
+        if (gettingHorizontalInput)
+        {
+            Vector3 lookAt = new Vector3(currentMovementInput.x, 0.0f, currentMovementInput.z);
+            Quaternion currentRotation = transform.rotation;
+
+            targetRotation = Quaternion.LookRotation(lookAt);
+            // rotate the player to makeit face the current position
+            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed);
+        }
+
+        // no matter where we are facing, that is now the forward direction
+        Vector3 targetDirection = transform.rotation     * Vector3.forward;
         // actually move the player
-        controller.Move(currentMovementInput * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
-        HandleRotation();
+        
+       //controller.Move(currentMovementInput * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
+        controller.Move(targetDirection.normalized * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
+
         animationBlend = Mathf.Lerp(animationBlend, speed, Time.deltaTime * SpeedChangeRate);
         if (animationBlend < 0.01f)
             animationBlend = 0f;
