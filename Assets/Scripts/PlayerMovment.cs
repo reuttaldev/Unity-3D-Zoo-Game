@@ -1,3 +1,6 @@
+
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +32,7 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField]
     private float GroundedRadius = 0.28f; // The radius of the grounded check. Should match the radius of the CharacterController
     [SerializeField]
-    private float rotationSpeed = 1f;
+    private float rotationSpeed = 100f;
     [SerializeField]
     public float gravity = -15.0f; // custom gravity value
 
@@ -124,7 +127,7 @@ public class PlayerMovment : MonoBehaviour
     }
     private void CheckOnGround()
     {
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - offsetFromGround,transform.position.z);
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - offsetFromGround, transform.position.z);
         onGround = Physics.CheckSphere(spherePosition, GroundedRadius, walkableLayer, QueryTriggerInteraction.Ignore);
         // update animator
         animator.SetBool("Grounded", onGround);
@@ -137,7 +140,7 @@ public class PlayerMovment : MonoBehaviour
         if (!gettingHorizontalInput)
             speed = 0.0f;
         // actually move the player
-        controller.Move(currentMovementInput * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f) );
+        controller.Move(currentMovementInput * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
         HandleRotation();
         animationBlend = Mathf.Lerp(animationBlend, speed, Time.deltaTime * SpeedChangeRate);
         if (animationBlend < 0.01f)
@@ -153,7 +156,7 @@ public class PlayerMovment : MonoBehaviour
         if (gettingHorizontalInput)
         {
             Quaternion target = Quaternion.LookRotation(lookAt);
-            transform.rotation = Quaternion.RotateTowards(currentRotation, target, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(currentRotation, target, rotationSpeed);
         }
     }
 
