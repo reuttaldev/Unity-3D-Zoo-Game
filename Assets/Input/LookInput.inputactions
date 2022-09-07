@@ -1,0 +1,45 @@
+{
+    "name": "LookInput",
+    "maps": [
+        {
+            "name": "Look",
+            "id": "4ec414b7-dbb0-4305-9d19-1b2b74a46177",
+            "actions": [
+                {
+                    "name": "LookControlCamera",
+                    "type": "PassThrough",
+                    "id": "0086e38e-8a12-4a5c-896e-83a0b8e8fc29",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dcff38ab-7966-4622-b3dc-8f65276a32bc",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookControlCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c55e7dcf-1d10-4080-b5e6-dacd187071e4",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookControlCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
