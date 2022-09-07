@@ -3,19 +3,14 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.Windows;
 
 public class PlayerMovment : MonoBehaviour
 {
     [Header("Refrences")]
     [SerializeField]
     private GameObject mainCamera;
-    [SerializeField]
-    private PlayerInput playerInput;
     [SerializeField]
     private LayerMask walkableLayer;
     [SerializeField]
@@ -62,6 +57,7 @@ public class PlayerMovment : MonoBehaviour
     private bool jumpInput = false;
     private bool sprintInput = false;
     Quaternion targetRotation;
+    private PlayerInput playerInput;
 
 
 
