@@ -1,8 +1,3 @@
-
-
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,11 +30,17 @@ public class PlayerMovment : MonoBehaviour
 
     [Header("Sfx")]
     [SerializeField]
-    private AudioClip[] walkignSounds;
+    private AudioClip[] walkSounds;
+    [SerializeField]
+    private AudioClip landSound;
+    [SerializeField]
+    private float walkingAudioVolume = 0.5f;
+
 
     [Header("Local Variables")]
     const float JUMPTIMEOUT = 0.50f;
     const float FALLTIMEOUT = 0.15f;
+
 
     private Vector2 input;
     private Vector3 currentMovementInput;
@@ -225,5 +226,16 @@ public class PlayerMovment : MonoBehaviour
         {
             verticalVelocity += gravity * Time.deltaTime; //multiply by delta time twice to linearly speed up over time
         }
+    }
+
+    private void OnFootstep(AnimationEvent animationEvent)
+    {
+                int ran = Random.Range(0, walkSounds.Length);
+                AudioSource.PlayClipAtPoint(walkSounds[ran], transform.TransformPoint(controller.center), walkingAudioVolume);
+    }
+
+    private void OnLand(AnimationEvent animationEvent)
+    {
+            AudioSource.PlayClipAtPoint(landSound, transform.TransformPoint(controller.center), walkingAudioVolume);
     }
 }
