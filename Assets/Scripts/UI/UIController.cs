@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class UIController : MonoBehaviour
 {
     //[Header("Buttons"), SerializeField]
     //private Button pauseButton, returnToMenuButton, exitGameButton;
@@ -28,11 +28,14 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = true;
         pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
     }
     public void Resume()
     {
         isPaused = false;
         pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+
     }
     public void OpenOptionsMenu()
     {
@@ -42,7 +45,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitGame()
     {
-
+        Application.Quit();
     }
     #endregion
     #region OPTIONS MENU
