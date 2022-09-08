@@ -46,11 +46,11 @@ public class PlayerMovment : MonoBehaviour
     private Vector3 currentMovementInput;
     private bool gettingHorizontalInput = false; // if the player is walking or sprinting 
     private float verticalVelocity;
+    private float rotationVelocity;
     private bool onGround = true;
     private float offsetFromGround = -0.14f;
-    private float speedOffset = 0.1f;
-    [Tooltip("Acceleration and deceleration")]
     private float SpeedChangeRate = 10.0f;
+    private float rotationSmoothSpeed = 0.1f;
     private float animationBlend;
     private float maxVelocity = 53.0f;
     private float fallTimeoutDelta;
@@ -124,13 +124,6 @@ public class PlayerMovment : MonoBehaviour
     {
         jumpInput = context.ReadValueAsButton();
     }
-    private void CheckOnGround()
-    {
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - offsetFromGround, transform.position.z);
-        onGround = Physics.CheckSphere(spherePosition, GroundedRadius, walkableLayer, QueryTriggerInteraction.Ignore);
-        // update animator
-        animator.SetBool("Grounded", onGround);
-    }
     private void Move()
     {
         // set speed according to walk or sprint input
@@ -139,42 +132,35 @@ public class PlayerMovment : MonoBehaviour
         if (!gettingHorizontalInput)
             speed = 0.0f;
 
-        // handle rotation 
         if (gettingHorizontalInput)
         {
-            Vector3 lookAt = new Vector3(currentMovementInput.x, 0.0f, currentMovementInput.z);
-            Quaternion currentRotation = transform.rotation;
+            Vector3 direction = new Vector3(currentMovementInput.x, 0f, currentMovementInput.y).normalized;
+            float targetRotation = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y; // convert to degrees
+            // rotate the player to the direction the camera is facing, controlled by the mouse
+            // do so gradually
+            float smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothSpeed);
+            transform.rotation = Quaternion.Euler(0f, smoothRotation, 0f);
+            // turn from rotation to direction 
+            Vector3 cameraDirection = Quaternion.Euler(0f, targetRotation, 0f)* Vector3.forward;
+            // actually move the player 
+            controller.Move(cameraDirection.normalized * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
 
-            targetRotation = Quaternion.LookRotation(lookAt);
-            // rotate the player to makeit face the current position
-            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed);
         }
-
-        // no matter where we are facing, that is now the forward direction
-        Vector3 targetDirection = transform.rotation     * Vector3.forward;
-        // actually move the player
-        
-       //controller.Move(currentMovementInput * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
-        controller.Move(targetDirection.normalized * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
-
+        // handle walking animation
         animationBlend = Mathf.Lerp(animationBlend, speed, Time.deltaTime * SpeedChangeRate);
         if (animationBlend < 0.01f)
             animationBlend = 0f;
-        // update the animator 
         animator.SetFloat("Speed", animationBlend);
         animator.SetFloat("MotionSpeed", 1);
     }
-    private void HandleRotation()
-    {
-        Vector3 lookAt = new Vector3(currentMovementInput.x, 0.0f, currentMovementInput.z);
-        Quaternion currentRotation = transform.rotation;
-        if (gettingHorizontalInput)
-        {
-            Quaternion target = Quaternion.LookRotation(lookAt);
-            transform.rotation = Quaternion.RotateTowards(currentRotation, target, rotationSpeed);
-        }
-    }
 
+    private void CheckOnGround()
+    {
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - offsetFromGround, transform.position.z);
+        onGround = Physics.CheckSphere(spherePosition, GroundedRadius, walkableLayer, QueryTriggerInteraction.Ignore);
+        // update animator
+        animator.SetBool("Grounded", onGround);
+    }
     private void Jump()
     {
         if (onGround)
@@ -211,7 +197,6 @@ public class PlayerMovment : MonoBehaviour
             }
             else
             {
-                Debug.Log("freefalling");
                 animator.SetBool("FreeFall", true);
             }
             // if we are not on the ground, do not jump
