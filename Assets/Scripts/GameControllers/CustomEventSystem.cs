@@ -34,7 +34,6 @@ public class CustomEventSystem : MonoBehaviour
     // methods for scriptd to call when event occurs
     public void OnEvent(EventType type, GameObject caller)
     {
-        Debug.Log("onevent");
         switch (type)
         {
             case EventType.EnemyCollision:

@@ -44,18 +44,22 @@ public class EnemyController : MonoBehaviour
         else
         {
             if (follow)
+            {
                 FollowPlayer();
-            else if(animator.GetBool("Walk"))
-                animator.SetBool("Walk", false);
+
+            }
+            if(animator.GetBool("Walk")!= follow)
+                animator.SetBool("Walk", follow);
 
         }
     }
     private void FollowPlayer()
     {
+        if(onTimeout)
+        {
+            follow = false;
+        }
         agent.SetDestination(player.transform.position);
-        animator.SetBool("Walk", true);
-
-
     }
     private void HitPlayer() // on impact 
     {
