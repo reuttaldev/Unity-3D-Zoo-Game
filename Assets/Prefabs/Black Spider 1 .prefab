@@ -1334,9 +1334,9 @@ GameObject:
   - component: {fileID: 5652197528626762314}
   - component: {fileID: 5330602562535979907}
   - component: {fileID: 150380097362298108}
-  - component: {fileID: 150380097362298083}
   - component: {fileID: 150380097362298109}
   - component: {fileID: 150380097362298110}
+  - component: {fileID: 1161489334}
   m_Layer: 0
   m_Name: 'Black Spider 1 '
   m_TagString: Untagged
@@ -1398,19 +1398,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &150380097362298083
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4988707560175683824}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.2729201
-  m_Center: {x: 0, y: 1.59, z: -0.11877298}
 --- !u!114 &150380097362298109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1446,9 +1433,22 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0.15
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &1161489334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988707560175683824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1, y: 1.34, z: 2.39}
+  m_Center: {x: 0, y: 1.29, z: 0}
 --- !u!1 &5253478490535311988
 GameObject:
   m_ObjectHideFlags: 0
