@@ -21,13 +21,12 @@ public class PlayerHealth : MonoBehaviour
     {
         SpawnPlayer();
         // subscribe to on enemy collision enter action
-        EventSystem.Instance.onEnemyCollision += UpdateHealth;
+        CustomEventSystem.Instance.onEnemyCollision += UpdateHealth;
     }
-
     private void SpawnPlayer()
     {
         // raise hight to trigger landing annimation, make it look as player is respawned 
-       transform.position= new Vector3(transform.position.x,yOffset, transform.position.z);
+        //transform.position= new Vector3(transform.position.x,yOffset, transform.position.z);
         // reset health
         this.currentHealth = initialHealth;
         UpdateUI();
@@ -52,6 +51,6 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateUI()
     {
         // make the bar show the current health
-        //this.currentHealth;
+        healthBar.value =this.currentHealth;
     }
 }

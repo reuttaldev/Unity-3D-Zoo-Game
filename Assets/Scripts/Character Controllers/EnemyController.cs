@@ -8,7 +8,6 @@ public class EnemyController : MonoBehaviour
     // in my case the enemy is the spiders
     [SerializeField]
     private float timeOut = 5f; // time to wait after impact, in seconds
-    [SerializeField]
     private NavMeshAgent agent;
     [SerializeField]
     private int damage = -10;
@@ -17,11 +16,15 @@ public class EnemyController : MonoBehaviour
     private PlayerHealth playerHealth;
     private float timeWaiting = 0f;
     private bool onTimeout = false; // this will be true when we are activly waiting to hit again
+    private Animator animator;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        Debug.Log(agent);
     }
+
     private void Update()
     {
         if (onTimeout)
@@ -52,7 +55,7 @@ public class EnemyController : MonoBehaviour
             // stop the enemy from moving 
             agent.SetDestination(transform.position);
             // send out event that a collision has occurred 
-            EventSystem.Instance.OnEvent(EventType.EnemyCollision, this.gameObject);
+            CustomEventSystem.Instance.OnEvent(EventType.EnemyCollision, this.gameObject);
             // make the enemy stop for some time
             onTimeout = true;
             timeWaiting = timeOut;
@@ -60,7 +63,7 @@ public class EnemyController : MonoBehaviour
     }
     // collision tells us when we actually hit the player
     // trigger tell us when we are in range
-    private void OnCollisionEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         HitPlayer();
     }
