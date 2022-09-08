@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
     private void SpawnPlayer()
     {
         // raise hight to trigger landing annimation, make it look as player is respawned 
-        //transform.position= new Vector3(transform.position.x,yOffset, transform.position.z);
+        transform.position= new Vector3(transform.position.x,yOffset, transform.position.z);
         // reset health
         this.currentHealth = initialHealth;
         UpdateUI();

@@ -138,7 +138,6 @@ public class UIController : MonoBehaviour
     public void SetResolution(int index)
     {
         Resolution resolution = resolutions[index];
-        Debug.Log(resolution.width +" "+resolution.height);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 

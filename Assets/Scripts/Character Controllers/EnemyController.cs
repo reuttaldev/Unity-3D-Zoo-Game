@@ -17,8 +17,7 @@ public class EnemyController : MonoBehaviour
     public int Damage { get { return damage; } }
     [SerializeField]
     private GameObject player;
-
-    private bool follow = false;
+    private bool inProximity = false; // if its close enough to the player 
     private float timeWaiting = 0f;
     private int hits = 0; // how many times we hit already
     private bool onTimeout = false; // this will be true when we are activly waiting to hit again
@@ -32,33 +31,32 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (onTimeout)
+        if (inProximity)
         {
-            if (timeWaiting <= 0) // timeout is over 
-                onTimeout = false;
+            if (onTimeout)
+            {
+                if (timeWaiting <= 0) // timeout is over 
+                {
+                    onTimeout = false;
+
+                }
+                else
+                {
+                    timeWaiting -= Time.deltaTime;
+
+                }
+                animator.SetBool("Walk", false);
+            }
             else
             {
-                timeWaiting -= Time.deltaTime;
-            }
-        }
-        else
-        {
-            if (follow)
-            {
                 FollowPlayer();
+                animator.SetBool("Walk", true);
 
             }
-            if(animator.GetBool("Walk")!= follow)
-                animator.SetBool("Walk", follow);
-
         }
     }
     private void FollowPlayer()
     {
-        if(onTimeout)
-        {
-            follow = false;
-        }
         agent.SetDestination(player.transform.position);
     }
     private void HitPlayer() // on impact 
@@ -74,6 +72,7 @@ public class EnemyController : MonoBehaviour
             onTimeout = true;
             timeWaiting = timeOut;
             hits++;
+            animator.SetBool("Walk", false);
             animator.SetTrigger("Attack");
         }
     }
@@ -89,8 +88,10 @@ public class EnemyController : MonoBehaviour
             }
             else if (hits == maxHits)
             {
-                follow = false;
+                animator.SetBool("Walk", false);
                 animator.SetBool("Death", true);
+                inProximity = false;
+
             }
         }
     }
@@ -102,13 +103,15 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //Debug.Log("player is in distance from spider");
-            follow = true;
+            inProximity = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        follow = false;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            inProximity = false;
+        }
     }
 
 }
