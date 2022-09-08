@@ -11,14 +11,16 @@ public class UIController : MonoBehaviour
     [Header("Panels"), SerializeField]
     private GameObject pauseMenu,optionsMenu, qualityPanel, keySettingsPanel,audioPanel;
     [SerializeField]
-    private TMP_Dropdown resolutionDropdown;
+    private TMP_Dropdown resolutionDropdown, shadowsDropdown;
     [SerializeField]
     private AudioMixer audioMixer;
-
-
-    internal bool isPaused = false;
+    // getting the player input action so we can remap it when needed 
+    private PlayerInput playerInput;
+    private InputAction playerMovementAction;
+    private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
     private Resolution[] resolutions; 
     private CustomUIInput UIInput;
+    private bool isPaused = false;
 
 
     private void Awake()
@@ -52,10 +54,14 @@ public class UIController : MonoBehaviour
         resolutionDropdown.AddOptions(temp);
         resolutionDropdown.value = currentResIndex;
         resolutionDropdown.RefreshShownValue();
+        playerInput = new PlayerInput();
+        playerMovementAction = playerInput.asset.FindAction("Move");
+
     }
     private void OnEnable()
     {
         UIInput.PauseMenu.Enable();
+
     }
     private void OnDisable()
     {
@@ -72,14 +78,14 @@ public class UIController : MonoBehaviour
         isPaused = true;
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        AudioListener.pause = true;
+        //AudioListener.pause = true;
     }
     public void Resume()
     {
         isPaused = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        AudioListener.pause = false;
+        //AudioListener.pause = false;
 
     }
     public void OpenOptionsMenu()
@@ -129,9 +135,44 @@ public class UIController : MonoBehaviour
     {
         Screen.fullScreen = val;    
     }
-    public void SetResolution()
+    public void SetResolution(int index)
     {
+        Resolution resolution = resolutions[index];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void SetShadowQuality(int index)
+    {
+        switch (index)
+        {
+            case 0: QualitySettings.shadows = ShadowQuality.All; break;
+            case 1: QualitySettings.shadows = ShadowQuality.HardOnly; break;
+            case 2: QualitySettings.shadows = ShadowQuality.Disable; break;
+        }
+    }
+
+    public void SetKeyBinding(int index)
+    {
+        switch(index)
+        {
+            // Keyboard
+            case 0: {;break; }
+            //WASD
+            case 1: {;break; }
+        }
+        // cannot change binding while we are using that key
+        playerMovementAction.Disable();
+
+        rebindingOperation = playerMovementAction.PerformInteractiveRebinding().OnComplete(operation => RebindComplete());
+        rebindingOperation.Start();
+    }
+
+    private void RebindComplete()
+    {
+        rebindingOperation.Dispose();
+        playerMovementAction.Enable();
 
     }
+
     #endregion
 }
