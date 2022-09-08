@@ -19,13 +19,11 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField]
     private float sprintSpeed = 20;
     [SerializeField]
-    private float jumpHeight = 1;
-    [SerializeField]
     private float GroundedRadius = 0.28f; // The radius of the grounded check. Should match the radius of the CharacterController
     [SerializeField]
-    private float rotationSpeed = 100f;
+    private float gravity = -15.0f; // custom gravity value
     [SerializeField]
-    public float gravity = -15.0f; // custom gravity value
+    private float jumpForce;
 
 
     [Header("Sfx")]
@@ -38,12 +36,13 @@ public class PlayerMovment : MonoBehaviour
 
 
     [Header("Local Variables")]
-    const float JUMPTIMEOUT = 0.50f;
+    const float JUMPTIMEOUT = 0.15f;
     const float FALLTIMEOUT = 0.15f;
 
 
     private Vector2 input;
     private Vector3 currentMovementInput;
+    private Vector3 cameraDirection;
     private bool gettingHorizontalInput = false; // if the player is walking or sprinting 
     private float verticalVelocity;
     private float rotationVelocity;
@@ -141,11 +140,10 @@ public class PlayerMovment : MonoBehaviour
             float smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothSpeed);
             transform.rotation = Quaternion.Euler(0f, smoothRotation, 0f);
             // turn from rotation to direction 
-            Vector3 cameraDirection = Quaternion.Euler(0f, targetRotation, 0f)* Vector3.forward;
+            cameraDirection = Quaternion.Euler(0f, targetRotation, 0f)* Vector3.forward;
             // actually move the player 
-            controller.Move(cameraDirection.normalized * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
-
         }
+        controller.Move(cameraDirection.normalized * (speed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f));
         // handle walking animation
         animationBlend = Mathf.Lerp(animationBlend, speed, Time.deltaTime * SpeedChangeRate);
         if (animationBlend < 0.01f)
@@ -181,8 +179,7 @@ public class PlayerMovment : MonoBehaviour
             }
             if (jumpInput && jumpTimeoutDelta <= 0.0f)
             {
-                // the square root of H * -2 * G = how much velocity needed to reach desired height
-                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                verticalVelocity = jumpForce;
                 animator.SetBool("Jump", true);
             }
         }
