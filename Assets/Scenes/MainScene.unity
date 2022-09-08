@@ -110,7 +110,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 60
+    agentSlope: 20
     agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -124,7 +124,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: a9320ab050d07384d9ac0500008410d5, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d0bbb26a4051e6d49923e8f44b92b57c, type: 2}
 --- !u!1 &77942843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2104,7 +2104,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496391430}
-  m_LocalRotation: {x: 0.04884344, y: -0.5521495, z: 0.032426942, w: 0.8316813}
+  m_LocalRotation: {x: 0.04884344, y: -0.55214953, z: 0.032426942, w: 0.8316813}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2894,7 +2894,7 @@ MonoBehaviour:
   m_XAxis:
     Value: -67.16
     m_SpeedMode: 0
-    m_MaxSpeed: 85
+    m_MaxSpeed: 120
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -6087,7 +6087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1338769023
 Transform:
   m_ObjectHideFlags: 0
@@ -12864,7 +12864,7 @@ PrefabInstance:
     - target: {fileID: 5430747117675695319, guid: 1cf91cf63f92fe94e80f2729633f50bf,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 95
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cf91cf63f92fe94e80f2729633f50bf, type: 3}
@@ -13379,16 +13379,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: spider
       objectReference: {fileID: 0}
-    - target: {fileID: 959506994399886507, guid: f84b6bef6c9738d44b2203ee8057ad04,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 959506994399886507, guid: f84b6bef6c9738d44b2203ee8057ad04,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1032897635657216501, guid: f84b6bef6c9738d44b2203ee8057ad04,
         type: 3}
       propertyPath: m_RootOrder
@@ -13444,32 +13434,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1836090380047149008, guid: f84b6bef6c9738d44b2203ee8057ad04,
+    - target: {fileID: 3394531471949503904, guid: f84b6bef6c9738d44b2203ee8057ad04,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 476164844}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f84b6bef6c9738d44b2203ee8057ad04, type: 3}
---- !u!1 &7993174793103805735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 368809467900341071, guid: f84b6bef6c9738d44b2203ee8057ad04,
-    type: 3}
-  m_PrefabInstance: {fileID: 7778614162330953320}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7993174793103805739
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7993174793103805735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.655716, y: 2.4919815, z: 2.95}
-  m_Center: {x: 0, y: 1.231988, z: 0}
 --- !u!224 &8228063336490665454
 RectTransform:
   m_ObjectHideFlags: 0

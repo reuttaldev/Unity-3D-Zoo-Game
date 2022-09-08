@@ -34,7 +34,7 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField]
     private AudioClip landSound;
     [SerializeField]
-    private float walkingAudioVolume = 0.5f;
+    private float walkingAudioVolume = 0.7f;
 
 
     [Header("Local Variables")]
