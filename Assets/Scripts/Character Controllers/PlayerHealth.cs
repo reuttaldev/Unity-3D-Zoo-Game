@@ -51,7 +51,6 @@ public class PlayerHealth : MonoBehaviour
     private void UpdateUI()
     {
         // make the bar show the current health
-        Debug.Log(this.currentHealth);
         healthBar.value =this.currentHealth;
     }
 }

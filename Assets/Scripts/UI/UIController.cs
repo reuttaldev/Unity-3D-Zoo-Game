@@ -138,17 +138,14 @@ public class UIController : MonoBehaviour
     public void SetResolution(int index)
     {
         Resolution resolution = resolutions[index];
+        Debug.Log(resolution.width +" "+resolution.height);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
     public void SetShadowQuality(int index)
     {
-        switch (index)
-        {
-            case 0: QualitySettings.shadows = ShadowQuality.All; break;
-            case 1: QualitySettings.shadows = ShadowQuality.HardOnly; break;
-            case 2: QualitySettings.shadows = ShadowQuality.Disable; break;
-        }
+        // changing the shadows in URP
+        QualitySettings.SetQualityLevel(index, false);
     }
 
     public void SetKeyBinding(int index)
