@@ -3,7 +3,7 @@ This is a 3D game made with Unity where you play as a zoo keeper.  It was made i
 
 It utilizes Unity's Universal Render Pipeline, the new input system, free graphics assets, and the Terrain Tools.
 
-# Implementation
+## Implementation
 
 My implementation includes:
 - Character Controller 
@@ -18,8 +18,8 @@ My implementation includes:
 - Git Large File Storage (LFS) 
 - Texture compression for windows build 
 
-# Demo 
-[![Open on Google Drive](https://drive.google.com/thumbnail?id=1pY6jzij4AF1mp9eMgLbIvKN9DCNiOFCD&sz=w1200-h675)](https://drive.google.com/drive/home?dmr=1&ec=wgc-drive-hero-goto)
+## Demo 
+[![Watch the demo on Google Drive](https://drive.google.com/thumbnail?id=12TJWBnMiSsh5zkZ1RWYGA_oznLCUrAsV&sz=w1200-h675)](https://drive.google.com/file/d/12TJWBnMiSsh5zkZ1RWYGA_oznLCUrAsV/view?usp=sharing)
 
-# Test it
+## Test it
 You can access the Windows build [here](windows%20build.zip). Download, unzip, and run the executable file. Please contact reutgaming@gmail.com for further assistance or a platform-specific build.
